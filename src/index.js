@@ -3,6 +3,7 @@ import { PixabayAPI } from './js/pixabayAPI';
 import { creatMarkup } from './js/creatMarkup';
 import Notiflix from 'notiflix';
 import { observer } from './js/observer';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 refs.form.addEventListener('submit', onSearch);
 
@@ -28,13 +29,13 @@ function onSearch(event) {
       creatMarkup(data);
 
       if (data.totalHits !== 0) {
-        Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
+        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
       }
 
       pixabayAPI.setTotalPhotos(data.totalHits);
       const hasMore = pixabayAPI.hasMorePhotos();
       if (hasMore) {
-        const item = document.querySelector('.photo-card:last-child');
+        const item = document.querySelector('.gallery__item:last-child');
         observer.observe(item);
       }
     })
@@ -42,3 +43,9 @@ function onSearch(event) {
 
   refs.form.reset();
 }
+
+var lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: '250',
+  scrollZoom: false,
+});

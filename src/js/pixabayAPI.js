@@ -5,7 +5,7 @@ export class PixabayAPI {
   #KEY = '32887815-95ef90331530c7572123f2036';
   #query = '';
   #page = 1;
-  #per_page = 20;
+  #per_page = 40;
   #totalPhotos = 0;
 
   async getPhotos() {
