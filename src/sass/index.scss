@@ -33,6 +33,7 @@ a {
 .gallery__image {
   height: 180px;
   width: 100%;
+  object-fit: cover;
 }
 
 .gallery__link {
