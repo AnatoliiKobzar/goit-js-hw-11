@@ -4,6 +4,8 @@ import { creatMarkup } from './js/creatMarkup';
 import Notiflix from 'notiflix';
 import { observer } from './js/observer';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import { andSearch } from './js/observer';
+import * as scroll from './js/btn-scroll';
 
 refs.form.addEventListener('submit', onSearch);
 
@@ -28,8 +30,19 @@ function onSearch(event) {
     .then(data => {
       creatMarkup(data);
 
+      if (data.totalHits === 0) {
+        Notiflix.Notify.warning(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+        return;
+      }
+
       if (data.totalHits !== 0) {
         Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+      }
+
+      if (data.totalHits <= 40) {
+        andSearch();
       }
 
       pixabayAPI.setTotalPhotos(data.totalHits);
@@ -43,9 +56,3 @@ function onSearch(event) {
 
   refs.form.reset();
 }
-
-var lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: '250',
-  scrollZoom: false,
-});

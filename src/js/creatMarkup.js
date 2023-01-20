@@ -1,16 +1,8 @@
 import Notiflix from 'notiflix';
 import { refs } from './refs';
 import SimpleLightbox from 'simplelightbox';
-import { andSearch } from './observer';
 
-export function creatMarkup({ totalHits, hits }) {
-  if (totalHits === 0) {
-    Notiflix.Notify.warning(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
-    return;
-  }
-
+export function creatMarkup({ hits }) {
   const markup = hits
     .map(
       ({
@@ -50,10 +42,6 @@ export function creatMarkup({ totalHits, hits }) {
 
   refs.gallery.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
-
-  if (totalHits <= 40) {
-    andSearch();
-  }
 }
 
 var lightbox = new SimpleLightbox('.gallery a', {
